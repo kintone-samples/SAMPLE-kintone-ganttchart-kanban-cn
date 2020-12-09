@@ -6,13 +6,29 @@
 
 Nodejs >=14
 
-# 调试
+# 安装
+
+请在项目根目录执行
+
+```console
+mkcert -install
+mkcert localhost 127.0.0.1 ::1
+npm i
+```
+
+# 开发&调试
+
+把
+https://localhost:8080/js/app.js
+添加到你的自定义 js 中
+
+执行
 
 ```console
 npm run start
 ```
 
-# 发行
+# 编译&发布
 
 ```console
 npm run build

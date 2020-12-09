@@ -1,8 +1,8 @@
 const { merge } = require('webpack-merge')
-const { resolve } = require('path')
+//const { resolve } = require('path')
 const common = require('./webpack.common.js')
-const glob = require('glob')
-const PurgeCSSPlugin = require('purgecss-webpack-plugin')
+// const glob = require('glob')
+// const PurgeCSSPlugin = require('purgecss-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -20,11 +20,11 @@ module.exports = merge(common, {
       chunkFilename: 'css/[name].[contenthash:8].css',
       ignoreOrder: false,
     }),
-    // new BundleAnalyzerPlugin({
-    //   analyzerMode: 'server',
-    //   analyzerHost: '127.0.0.1',
-    //   analyzerPort: 8888,
-    // }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'server',
+      analyzerHost: '127.0.0.1',
+      analyzerPort: 8888,
+    }),
   ],
   optimization: {
     splitChunks: {
