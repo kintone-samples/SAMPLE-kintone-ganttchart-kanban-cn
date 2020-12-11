@@ -2,6 +2,8 @@
 
 这是一个使用看板、甘特图来强化 kintone 项目管理的 demo
 
+![效果](https://raw.githubusercontent.com/cyaoc/kintone-project-manager/master/screenshot/screenshot.gif)
+
 # 系统需求
 
 - Nodejs >=14
