@@ -5,6 +5,7 @@
 # 系统需求
 
 Nodejs >=14
+mkcert
 
 # 安装
 
