@@ -21,8 +21,8 @@ const getCssLoaders = (importLoaders) => [
     options: {
       postcssOptions: {
         plugins: [
+          'postcss-flexbugs-fixes',
           [
-            'postcss-flexbugs-fixes',
             'postcss-preset-env',
             {
               autoprefixer: {
@@ -30,8 +30,8 @@ const getCssLoaders = (importLoaders) => [
                 flexbox: 'no-2009',
               },
             },
-            'postcss-normalize',
           ],
+          'postcss-normalize',
         ],
       },
       sourceMap: isDev,
