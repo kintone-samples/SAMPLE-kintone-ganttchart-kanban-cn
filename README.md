@@ -2,6 +2,8 @@
 
 这是一个使用看板、甘特图来强化 kintone 项目管理的 demo
 
+kintone app设置请看[这里](https://cybozudev.kf5.com/hc/kb/article/1439881/)
+
 ![效果](https://raw.githubusercontent.com/cyaoc/kintone-project-manager/master/screenshot/screenshot.gif)
 
 # 系统需求
