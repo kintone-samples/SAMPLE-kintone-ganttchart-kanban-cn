@@ -1,34 +1,46 @@
 const { merge } = require('webpack-merge')
-//const { resolve } = require('path')
 const common = require('./webpack.common.js')
-// const glob = require('glob')
-// const PurgeCSSPlugin = require('purgecss-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: false,
   plugins: [
-    new CleanWebpackPlugin(),
-    // new PurgeCSSPlugin({
-    //   paths: glob.sync(`${resolve(__dirname, '../src')}/**/*.{tsx,scss,less,css}`, { nodir: true }),
-    // }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash:8].css',
-      chunkFilename: 'css/[name].[contenthash:8].css',
-      ignoreOrder: false,
-    }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'server',
-      analyzerHost: '127.0.0.1',
-      analyzerPort: 8888,
+      filename: 'css/[name].css',
+      chunkFilename: 'css/[name].css',
     }),
   ],
   optimization: {
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+        terserOptions: {
+          compress: { pure_funcs: ['console.log'] },
+        },
+      }),
+      new CssMinimizerPlugin({
+        minimizerOptions: {
+          preset: [
+            'default',
+            {
+              discardComments: { removeAll: true },
+            },
+          ],
+        },
+      }),
+    ],
     splitChunks: {
-      chunks: 'all',
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name(module, chunks, cacheGroupKey) {
+            return `${cacheGroupKey}`
+          },
+          chunks: 'all',
+        },
+      },
     },
   },
 })

@@ -1,19 +1,17 @@
 const { resolve } = require('path')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const isDev = process.env.NODE_ENV !== 'production'
+const isDebug = process.env.NODE_ENV === 'debug'
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
-const getCssLoaders = (importLoaders) => [
-  isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+const cssLoaders = (preNumber) => [
+  isDev && !isDebug ? 'style-loader' : MiniCssExtractPlugin.loader,
   {
     loader: 'css-loader',
     options: {
-      modules: false,
       sourceMap: isDev,
-      importLoaders,
+      importLoaders: preNumber + 1,
     },
   },
   {
@@ -31,7 +29,6 @@ const getCssLoaders = (importLoaders) => [
               },
             },
           ],
-          'postcss-normalize',
         ],
       },
       sourceMap: isDev,
@@ -39,62 +36,51 @@ const getCssLoaders = (importLoaders) => [
   },
 ]
 
+const source = resolve(__dirname, '../src')
+const output = resolve(__dirname, '../dist')
+
 module.exports = {
   entry: {
-    app: resolve(__dirname, '../src/index.tsx'),
+    app: resolve(source, 'index.tsx'),
   },
   output: {
-    filename: `js/[name]${isDev ? '' : '.[contenthash:8]'}.js`,
-    path: resolve(__dirname, '../dist'),
+    filename: `js/[name].js`,
+    path: output,
+    clean: true,
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.json'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
   },
-  // externals: {
-  //   react: 'React',
-  //   'react-dom': 'ReactDOM',
-  // },
-  optimization: {
-    minimize: !isDev,
-    minimizer: [
-      !isDev &&
-        new TerserPlugin({
-          extractComments: false,
-          terserOptions: {
-            compress: { pure_funcs: ['console.log'] },
-          },
-        }),
-      !isDev && new OptimizeCssAssetsPlugin(),
-    ].filter(Boolean),
+  externals: {
   },
   plugins: [
-    new ForkTsCheckerWebpackPlugin({
-      typescript: {
-        configFile: resolve(__dirname, '../tsconfig.json'),
-      },
-    }),
     new webpack.DefinePlugin({
       process: {
         env: {},
+      },
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: resolve(__dirname, '../tsconfig.json'),
       },
     }),
   ],
   module: {
     rules: [
       {
-        test: /\.(tsx?|js)$/,
+        test: /\.(tsx?|jsx?)$/,
         loader: 'babel-loader',
         options: { cacheDirectory: true },
         exclude: /node_modules/,
       },
       {
         test: /\.css$/,
-        use: getCssLoaders(1),
+        use: cssLoaders(0),
       },
       {
         test: /\.less$/,
         use: [
-          ...getCssLoaders(2),
+          ...cssLoaders(1),
           {
             loader: 'less-loader',
             options: {
@@ -106,7 +92,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          ...getCssLoaders(2),
+          ...cssLoaders(1),
           {
             loader: 'sass-loader',
             options: {
@@ -114,6 +100,14 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
+        type: 'asset/inline',
+      },
+      {
+        test: /\.(ttf|woff|woff2|eot|otf)$/,
+        type: 'asset/inline',
       },
     ],
   },
