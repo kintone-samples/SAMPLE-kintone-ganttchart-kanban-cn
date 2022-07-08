@@ -21,7 +21,6 @@ const Kanban = () => {
           cards: new Array<KCard>(),
         }
       })
-      console.log(lanes)
       records.forEach((record) =>
         lanes[status.get(record.status.value!)!].cards!.push({
           id: record.$id.value,
