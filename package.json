@@ -1,6 +1,6 @@
 {
   "name": "kpm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "project manager for kintone",
   "scripts": {
     "format": "prettier --write src",
@@ -69,5 +69,9 @@
     "react-dom": "^16.14.0",
     "react-trello": "^2.2.11",
     "string-to-color": "^2.2.2"
+  },
+  "resolutions": {
+    "react": "16.14.0",
+    "react-dom": "16.14.0"
   }
 }

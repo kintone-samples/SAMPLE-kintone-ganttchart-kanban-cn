@@ -14,12 +14,16 @@ kintone app 设置请看[这里](https://cybozudev.kf5.com/hc/kb/article/1439881
 
 ```console
 npm i
+or
+yarn
 ```
 
 # 开发&调试
 
 ```console
 npm start
+or
+yarn start
 ```
 
 第一次启动命令时，windows 会提示你导入证书；而 mac 则需要你输入 sudo 的密码。
@@ -29,6 +33,8 @@ npm start
 
 ```console
 npm run build
+or
+yarn build
 ```
 
 # 关联项目

@@ -5,6 +5,8 @@ export type AppRecord = {
   $id: KintoneRecordField.ID
   parent: KintoneRecordField.Number
   summary: KintoneRecordField.SingleLineText
+  detail: KintoneRecordField.MultiLineText
+  assignee: KintoneRecordField.UserSelect
   startDate: KintoneRecordField.Date
   endDate: KintoneRecordField.Date
   type: KintoneRecordField.Dropdown
