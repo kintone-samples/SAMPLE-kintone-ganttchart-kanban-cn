@@ -1,4 +1,4 @@
-# kintone-task-manager
+# kintone-tasks-manager
 
 这是一个使用看板、甘特图来强化 kintone 项目管理的 demo
 
