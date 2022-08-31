@@ -4,7 +4,7 @@
 
 kintone app 设置请看[这里](https://cybozudev.kf5.com/hc/kb/article/1439881/)
 
-![效果](https://raw.githubusercontent.com/cyaoc/kintone-project-manager/master/screenshot/screenshot.gif)
+![效果](https://raw.githubusercontent.com/kintone-samples/SAMPLE-kintone-ganttchart-kanban-cn/master/screenshot/screenshot.gif)
 
 # 系统需求
 
